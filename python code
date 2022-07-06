@@ -9,7 +9,7 @@ work_volume_day = Decimal(read_balance) * Decimal(12.5) // 100 * 100
 #   Указываем переменные значения
 new_volume = Decimal(0)
 all_results = [0]
-day_all_results = [0]
+day_all_results = [0]  # Добавляем значения списком в течение всей торговой сессии
 
 changed_balance = new_volume * (100 + Decimal(all_results[-1]) - Decimal(0.1)) / 100
 new_balance = int((Decimal(read_balance) + changed_balance - new_volume) * 100) / 100
