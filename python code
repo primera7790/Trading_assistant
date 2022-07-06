@@ -16,7 +16,7 @@ work_volume_file = open("volume.txt")
 read_work_volume = work_volume_file.read()
 
 if sum(day_all_results) < -1:
-    print("На сегодня торговля окончена")
+    print("На сегодня торговля окончена")  # "Trading is over for today"
 
 else:
     if sum(all_results) < -0.5:
