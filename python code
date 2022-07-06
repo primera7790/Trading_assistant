@@ -5,6 +5,7 @@ read_balance = balance.read()
 
 work_volume_day = Decimal(read_balance) * Decimal(12.5) // 100 * 100
 
+#   Specify variable values
 new_volume = Decimal(0)
 all_results = [0]
 day_all_results = [0]
