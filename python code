@@ -7,6 +7,12 @@ def work_volume_rewrite(item):
     work_volume_file_new.close()
 
 
+def results_rewrite(item):
+    results_file_new = open("results.txt", "w")
+    results_file_new.write(item)
+    results_file_new.close()
+
+
 def day_results_rewrite(item):
     day_results_file_new = open("day_results.txt", "w")
     day_results_file_new.write(item)
@@ -19,6 +25,9 @@ read_balance = balance.read()
 work_volume_file = open("volume.txt")
 read_work_volume = work_volume_file.read()
 
+results_file = open("results.txt")
+read_results_file = results_file.read()
+
 day_results_file = open("day_results.txt")
 read_day_results = day_results_file.read()
 
@@ -27,27 +36,33 @@ new_volume = Decimal(read_work_volume)
 
 results = Decimal(input("Результат сделки, %: "))   # "0" - сброс до объема начала дня.
 
-changed_balance = new_volume * (100 + results - Decimal(0.1)) / 100
+results_rewrite(str(Decimal(read_results_file) + results - Decimal(str(0.1))))
+
+changed_balance = new_volume * (100 + results - Decimal(str(0.1))) / 100
 new_balance = int((Decimal(read_balance) + changed_balance - new_volume) * 100) / 100
 
-if results < -0.5:
-    work_volume_rewrite(str(int(read_work_volume) - 100))
-    day_results_rewrite(str(Decimal(read_day_results) + results))
+day_results_rewrite(str(Decimal(read_day_results) + results))
 
-elif results > 1:
+results_file = open("results.txt")
+read_results_file = results_file.read()
+
+if Decimal(read_results_file) < -0.5:
+    work_volume_rewrite(str(int(read_work_volume) - 100))
+    results_rewrite(str(0))
+
+elif Decimal(read_results_file) > 1:
     work_volume_rewrite(str(int(read_work_volume) + 100))
-    day_results_rewrite(str(Decimal(read_day_results) + results))
+    results_rewrite(str(0))
 
 if results == 0:
     work_volume_rewrite(str(int(work_volume_day)))
     day_results_rewrite(str(results))
+    results_rewrite(str(0))
 
 else:
     new_balance_file = open("balance.txt", "w")
     new_balance_file.write(str(new_balance))
     new_balance_file.close()
-
-    day_results_rewrite(str(Decimal(read_day_results) + results))
 
 work_volume_file = open("volume.txt")
 work_volume = work_volume_file.read()
@@ -57,5 +72,6 @@ read_day_results = day_results_file.read()
 
 if Decimal(read_day_results) < -1:
     print("На сегодня торговля окончена")
+
 else:
     print(work_volume)
