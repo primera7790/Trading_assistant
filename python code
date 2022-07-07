@@ -8,9 +8,9 @@ def work_volume_rewrite(item):
 
 
 def day_results_rewrite(item):
-    day_results_file = open("day_results.txt", "w")
-    day_results_file.write(item)
-    day_results_file.close()
+    day_results_file_new = open("day_results.txt", "w")
+    day_results_file_new.write(item)
+    day_results_file_new.close()
 
 
 balance = open("balance.txt")
