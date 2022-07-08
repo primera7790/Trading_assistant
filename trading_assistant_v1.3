@@ -1,4 +1,5 @@
 from decimal import Decimal
+from emoji import emojize
 
 
 def work_volume_rewrite(item):
@@ -31,15 +32,21 @@ read_results_file = results_file.read()
 day_results_file = open("day_results.txt")
 read_day_results = day_results_file.read()
 
+while True:
+    results = input("  Результат сделки, %: ")
+
+    try:
+        results = Decimal(results)
+        break
+    except ArithmeticError:
+        print(emojize(":collision::collision::collision: Вводимое значение должно быть числом, повторите попытку."))
+
 work_volume_day = Decimal(read_balance) * Decimal(12.5) // 100 * 100
 new_volume = Decimal(read_work_volume)
-
-results = Decimal(input("Результат сделки, %: "))   # "0" - сброс до объема начала дня.
-
-results_rewrite(str(Decimal(read_results_file) + results - Decimal(str(0.1))))
-
 changed_balance = new_volume * (100 + results - Decimal(str(0.1))) / 100
 new_balance = int((Decimal(read_balance) + changed_balance - new_volume) * 100) / 100
+
+results_rewrite(str(Decimal(read_results_file) + results - Decimal(str(0.1))))
 
 day_results_rewrite(str(Decimal(read_day_results) + results))
 
@@ -58,7 +65,6 @@ if results == 0:
     work_volume_rewrite(str(int(work_volume_day)))
     day_results_rewrite(str(results))
     results_rewrite(str(0))
-
 else:
     new_balance_file = open("balance.txt", "w")
     new_balance_file.write(str(new_balance))
@@ -67,11 +73,16 @@ else:
 work_volume_file = open("volume.txt")
 work_volume = work_volume_file.read()
 
+results_file = open("results.txt")
+read_results_file = results_file.read()
+
 day_results_file = open("day_results.txt")
 read_day_results = day_results_file.read()
 
 if Decimal(read_day_results) < -1:
-    print("На сегодня торговля окончена")
-
+    print(emojize(":chart_decreasing:  На сегодня торговля окончена"))
 else:
-    print(work_volume)
+    if read_results_file == "0":
+        print(emojize(":warning:Ваш актуальный объем: " + work_volume + "$"))
+    else:
+        print("  Ваш актуальный объем: " + work_volume + "$")
