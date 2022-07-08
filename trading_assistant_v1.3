@@ -42,6 +42,7 @@ while True:
     except ArithmeticError:
         print(emojize(":collision::collision::collision: Вводимое значение должно быть числом, повторите попытку."))
 
+# Make calculations and rewrite the file based on them
 work_volume_day = Decimal(read_balance) * Decimal(12.5) // 100 * 100
 new_volume = Decimal(read_work_volume)
 changed_balance = new_volume * (100 + results - Decimal(str(0.1))) / 100
