@@ -19,7 +19,7 @@ def day_results_rewrite(item):
     day_results_file_new.write(item)
     day_results_file_new.close()
 
-
+# Ensure readability of data from files
 balance = open("balance.txt")
 read_balance = balance.read()
 
@@ -56,7 +56,6 @@ read_results_file = results_file.read()
 if Decimal(read_results_file) < -0.5:
     work_volume_rewrite(str(int(read_work_volume) - 100))
     results_rewrite(str(0))
-
 elif Decimal(read_results_file) > 1:
     work_volume_rewrite(str(int(read_work_volume) + 100))
     results_rewrite(str(0))
