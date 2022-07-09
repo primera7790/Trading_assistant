@@ -83,6 +83,7 @@ read_results_file = results_file.read()
 day_results_file = open("day_results.txt")
 read_day_results = day_results_file.read()
 
+# We write the terms of the trade restriction
 if Decimal(read_day_results) < -1:
     print(emojize(":chart_decreasing:  На сегодня торговля окончена"))
 else:
