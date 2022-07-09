@@ -52,11 +52,11 @@ results_rewrite(str(Decimal(read_results_file) + results - Decimal(str(0.1))))
 
 day_results_rewrite(str(Decimal(read_day_results) + results))
 
-# ensure that the modified file is readable
+# Ensure that the modified file is readable
 results_file = open("results.txt")
 read_results_file = results_file.read()
 
-# enter the conditions under which the file data is overwritten
+# Enter the conditions under which the file data is overwritten
 if Decimal(read_results_file) < -0.5:
     work_volume_rewrite(str(int(read_work_volume) - 100))
     results_rewrite(str(0))
