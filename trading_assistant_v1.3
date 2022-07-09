@@ -34,7 +34,8 @@ read_day_results = day_results_file.read()
 
 # Handle an exception on data entry
 while True:
-    results = input("  Результат сделки, %: ")  # "  Result of the deal, %: "
+    results = input("  Результат сделки, %: ")
+                  # "  Result of the deal, %: "
 
     try:
         results = Decimal(results)
@@ -87,6 +88,7 @@ read_day_results = day_results_file.read()
 # We write the terms of the trade restriction
 if Decimal(read_day_results) < -1:
     print(emojize(":chart_decreasing:  На сегодня торговля окончена"))
+                # ":chart_decreasing:  Trading is over for today"
 else:
     if read_results_file == "0":
         print(emojize(":warning:Ваш актуальный объем: " + work_volume + "$"))
