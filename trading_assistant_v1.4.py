@@ -88,9 +88,7 @@ while True:
         rewrite(str(one_trade_result), "day_results.txt")
         rewrite(str(0), "results.txt")
     else:
-        new_balance_file = open("balance.txt", "w")
-        new_balance_file.write(str(new_balance))
-        new_balance_file.close()
+        rewrite(str(new_balance), "balance.txt")
 
     volume = read("volume.txt")
     results = read("results.txt")
