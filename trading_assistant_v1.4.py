@@ -10,19 +10,8 @@ def read(file_name):
 def rewrite(item, file_name):
     with open(file_name, "w") as file:
         file.write(item)
-
-
-def read_try(file_name):
-    var = read(file_name)
-    while True:
-        try:
-            Decimal(var)
-            return var
-        except ArithmeticError:
-            rewrite(str(0), file_name)
-            return read(file_name)
-
-
+        
+        
 balance = read("balance.txt")
 while True:
     try:
@@ -48,9 +37,21 @@ while True:
         rewrite(str(Decimal(balance) * Decimal(12.5) // 100 * 100), "volume.txt")
         volume = read("volume.txt")
 
-results = read_try("results.txt")
+results = read("results.txt")
+while True:
+    try:
+        Decimal(results)
+        break
+    except ArithmeticError:
+        rewrite(str(0), "results.txt")
 
-day_results = read_try("day_results.txt")
+day_results = read("day_results.txt")
+while True:
+    try:
+        Decimal(day_results)
+        break
+    except ArithmeticError:
+        rewrite(str(0), "day_results.txt")
 
 while True:
     while True:
