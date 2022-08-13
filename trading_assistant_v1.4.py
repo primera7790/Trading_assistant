@@ -10,7 +10,6 @@ def read(file_name):
 def rewrite(item, file_name):
     with open(file_name, "w") as file:
         file.write(item)
-        file.close()
 
 
 def read_try(file_name):
