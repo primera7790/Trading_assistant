@@ -1,8 +1,12 @@
 from decimal import Decimal
 from emoji import emojize
+import os
 
 
 def read(file_name):
+    if os.path.exists(file_name) is False:
+        with open(file_name, "w") as file:
+            file.write("0")
     with open(file_name) as file:
         return file.read()
 
