@@ -11,6 +11,11 @@ from selenium.webdriver.chrome.service import Service
 from program.tech_zone.modules_t_a.work_with_data import work_volume_calculation
 from program.tech_zone.modules_t_a.parsing_tmm import get_trade_data
 
+# TODO завершить написание кода отправки email с отчетом об исключении
+# def send_email(message):
+#     sender = os.environ.get('email_sender')
+#     password = os.environ.get('password_email')
+
 
 def get_work_volume(url, email, password, html_name='index.html'):
     chrome_service = Service(r'./tech_zone/driver_chrome_selenium/chromedriver.exe')
@@ -76,9 +81,9 @@ def get_work_volume(url, email, password, html_name='index.html'):
 def main():
     url = 'https://tradermake.money/app/account/my-trades'
 
-    # load_dotenv(Path(Path(__file__).parent, 'tech_zone', 'env', '.env'))
-    # email = os.environ.get('email_tmm')
-    # password = os.environ.get('password_tmm')
+    load_dotenv(Path(Path(__file__).parent, 'tech_zone', 'env', '.env'))
+    email = os.environ.get('email_tmm')
+    password = os.environ.get('password_tmm')
 
     get_work_volume(url, email, password)
 

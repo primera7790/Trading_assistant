@@ -23,7 +23,6 @@ def get_trade_data(html_name='index.html'):
 
     trade_percent = soup.\
         find(class_='v-chip__content')
-    print(trade_percent)
 
     trade_volume = soup.find(class_='v-data-table__wrapper').\
         find('tr').\
@@ -31,14 +30,12 @@ def get_trade_data(html_name='index.html'):
         find_next('tr').\
         find_previous().\
         find_previous()
-    print(trade_volume)
 
     trade_commission = soup.find(class_='v-data-table__wrapper').\
         find('tr').\
         find_next('tr').\
         find_next('tr').\
         find_previous()
-    print(trade_commission)
 
     while True:
         if trade_percent is not None and trade_volume is not None and trade_commission is not None:
@@ -60,6 +57,3 @@ def get_trade_data(html_name='index.html'):
 
         print('  Данные не подгрузились. Повторяю запрос...')
         time.sleep(5)
-
-
-# get_trade_data()
