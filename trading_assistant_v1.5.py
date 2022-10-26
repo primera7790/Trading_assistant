@@ -15,7 +15,7 @@ from program.tech_zone.modules_t_a.parsing_tmm import get_trade_data
 def get_work_volume(url, email, password, html_name='index.html'):
     chrome_service = Service(r'./tech_zone/driver_chrome_selenium/chromedriver.exe')
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('proxy-server=190.61.88.147:8080')
+    #  chrome_options.add_argument('proxy-server=190.61.88.147:8080')
     chrome_options.add_argument('--disable-blink-features=AutomationControlled')
     chrome_options.add_argument('--headless')
     driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
