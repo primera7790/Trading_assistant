@@ -24,16 +24,19 @@ def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commissio
     while True:
         try:
             if balance == '':
-                input_balance = input('  Укажите сумму на Вашем балансе, $: ')
+                input_balance = input('--------------------------------------\n'
+                                      '  Укажите сумму на Вашем балансе, $: ')
             elif balance == '0':
-                input_balance = input('  Укажите сумму на Вашем балансе, $: ')
+                input_balance = input('--------------------------------------\n'
+                                      '  Укажите сумму на Вашем балансе, $: ')
             else:
                 break
             Decimal(input_balance)
             rewrite(input_balance, Path(data_path, 'balance.txt'))
             balance = read(Path(data_path, 'balance.txt'))
         except ArithmeticError:
-            print(emojize(':collision::collision::collision: Вводимое значение должно быть числом, повторите попытку.'
+            print(emojize('--------------------------------------\n'
+                          ':collision::collision::collision: Вводимое значение должно быть числом, повторите попытку.'
                           '\n      Также не принимаются числа через запятую.'))
 
     base_work_volume = Decimal(balance) * Decimal(12.5) // 100 * 100
@@ -76,7 +79,8 @@ def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commissio
         day_results = read(Path(data_path, 'day_results.txt'))
 
         if Decimal(day_results) < -1.5:
-            print(emojize(':chart_decreasing:  На сегодня торговля окончена'))
+            print(emojize('--------------------------------------\n'
+                          ':chart_decreasing:  На сегодня торговля окончена'))
             rewrite(int(base_work_volume), Path(data_path, 'volume.txt'))
             rewrite(0, Path(data_path, 'day_results.txt'))
             rewrite(0, Path(data_path, 'results.txt'))
@@ -96,6 +100,15 @@ def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commissio
             results = read(Path(data_path, 'results.txt'))
 
             if results == '0':
-                print(emojize(':warning:Ваш актуальный объем: ' + current_work_volume + '$'))
+                print(emojize('--------------------------------------\n'
+                              ':warning:Ваш актуальный объем: ' + current_work_volume + '$'))
             else:
                 print('  Ваш актуальный объем: ' + current_work_volume + '$')
+
+
+def main():
+    work_volume_calculation()
+
+
+if __name__ == '__name__':
+    main()
