@@ -11,7 +11,6 @@ data_path = Path(Path(__file__).parent.parent.parent, 'data')
 def get_trade_data(html_name='index.html'):
     with open(Path(data_path, f'{html_name}'), encoding='utf8') as file:
         src = file.read()
-
     soup = BeautifulSoup(src, 'lxml')
 
     previous_trade_id = read(Path(data_path, 'previous_trade_id.txt'))
@@ -24,18 +23,14 @@ def get_trade_data(html_name='index.html'):
     trade_percent = soup.\
         find(class_='v-chip__content')
 
-    trade_volume = soup.find(class_='v-data-table__wrapper').\
+    trade_info = soup.find(class_='v-data-table__wrapper').\
         find('tr').\
         find_next('tr').\
-        find_next('tr').\
-        find_previous().\
-        find_previous()
+        find_all('td')
 
-    trade_commission = soup.find(class_='v-data-table__wrapper').\
-        find('tr').\
-        find_next('tr').\
-        find_next('tr').\
-        find_previous()
+    trade_volume = trade_info[23]
+    trade_commission = trade_info[24]
+
 
     while True:
         if trade_percent is not None and trade_volume is not None and trade_commission is not None:
@@ -44,7 +39,8 @@ def get_trade_data(html_name='index.html'):
             trade_commission = trade_commission.text.replace('$', '').strip().replace(',', '.')
 
             if current_trade_id == previous_trade_id:
-                print(emojize(':collision: Новых сделок не обнаружено. Возможны неполадки на сайте.'))
+                print(emojize('--------------------------------------\n'
+                              ':collision: Новых сделок не обнаружено. Возможны неполадки на сайте.'))
                 return ['0', '0', '0']
             elif trade_percent.replace('.', '').isdigit() and \
                     trade_volume.replace('.', '').isdigit() and \
@@ -57,3 +53,11 @@ def get_trade_data(html_name='index.html'):
 
         print('  Данные не подгрузились. Повторяю запрос...')
         time.sleep(5)
+
+
+def main():
+    get_trade_data()
+
+
+if __name__ == '__main__':
+    main()
