@@ -1,39 +1,25 @@
-import os
 from emoji import emojize
-from pathlib import Path
 from decimal import Decimal
 
-data_path = Path(Path(__file__).parent.parent.parent, 'data')
+from program.tech_zone.modules_t_a.t_a_database import table_select
+from program.tech_zone.modules_t_a.t_a_database import table_update
 
 
-def read(file_name):
-    if os.path.exists(file_name) is False:
-        with open(file_name, 'w') as file:
-            file.write('0')
-    with open(file_name) as file:
-        return file.read()
+def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commission='0', current_trade_id=None):
 
+    balance = table_select('balance')
 
-def rewrite(item, file_name):
-    with open(file_name, 'w') as file:
-        file.write(str(item))
-
-
-def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commission='0'):
-    balance = read(Path(data_path, 'balance.txt'))
     while True:
         try:
-            if balance == '':
-                input_balance = input('--------------------------------------\n'
-                                      '  Укажите сумму на Вашем балансе, $: ')
-            elif balance == '0':
+            if balance == '' or balance == '0' or float(balance) <= 0:
                 input_balance = input('--------------------------------------\n'
                                       '  Укажите сумму на Вашем балансе, $: ')
             else:
                 break
-            Decimal(input_balance)
-            rewrite(input_balance, Path(data_path, 'balance.txt'))
-            balance = read(Path(data_path, 'balance.txt'))
+            table_update('balance', round(Decimal(input_balance), 3))
+            # rewrite(round(Decimal(input_balance), 3), Path(data_path, 'balance.txt'))
+            balance = table_select('balance')
+            # balance = read(Path(data_path, 'balance.txt'))
         except ArithmeticError:
             print(emojize('--------------------------------------\n'
                           ':collision::collision::collision: Вводимое значение должно быть числом, повторите попытку.'
@@ -41,63 +27,65 @@ def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commissio
 
     base_work_volume = Decimal(balance) * Decimal(12.5) // 100 * 100
 
-    current_work_volume = read(Path(data_path, 'volume.txt'))
-
+    current_work_volume = table_select('volume')
     try:
         Decimal(current_work_volume)
     except ArithmeticError:
-        rewrite(base_work_volume, Path(data_path, 'volume.txt'))
-        current_work_volume = read(Path(data_path, 'volume.txt'))
-    results = read(Path(data_path, 'results.txt'))
+        table_update('volume', base_work_volume)
+        current_work_volume = table_select('volume')
+
+    results = table_select('results')
     try:
         Decimal(results)
     except ArithmeticError:
-        rewrite(0, Path(data_path, 'results.txt')
-                )
-    day_results = read(Path(data_path, 'day_results.txt'))
+        table_update('results', '0')
+
+    day_results = table_select('day_results')
     try:
         Decimal(day_results)
     except ArithmeticError:
-        rewrite(0, Path(data_path, 'day_results.txt'))
+        table_update('day_results', '0')
 
     change_volume = (Decimal(trade_volume) * (100 + Decimal(trade_percent)) / 100) - Decimal(trade_commission)
     new_balance = Decimal(balance) + change_volume - Decimal(trade_volume)
 
     if Decimal(trade_percent) == 0:
-        rewrite(int(base_work_volume), Path(data_path, 'volume.txt'))
-        rewrite(0, Path(data_path, 'day_results.txt'))
-        rewrite(0, Path(data_path, 'results.txt'))
+        table_update('volume', int(base_work_volume))
+        table_update('day_results', '0')
+        table_update('results', '0')
 
-        current_work_volume = read(Path(data_path, 'volume.txt'))
+        current_work_volume = table_select('volume')
+
         print(emojize(':warning:Ваш актуальный объем: ' + current_work_volume + '$'))
 
     else:
-        rewrite(new_balance, Path(data_path, 'balance.txt'))
-        rewrite(Decimal(results) + Decimal(trade_percent) - Decimal(trade_commission) / Decimal(trade_volume) * 100, Path(data_path, 'results.txt'))
-        rewrite(Decimal(day_results) + Decimal(trade_percent), Path(data_path, 'day_results.txt'))
+        table_update('balance', round(new_balance, 3))
+        table_update('results', round(Decimal(results) + Decimal(trade_percent) - Decimal(trade_commission) / Decimal(trade_volume) * 100, 3))
+        table_update('day_results', round(Decimal(day_results) + Decimal(trade_percent), 3))
+        table_update('previous_trade_id', current_trade_id)
 
-        day_results = read(Path(data_path, 'day_results.txt'))
+        day_results = table_select('day_results')
 
         if Decimal(day_results) < -1.5:
             print(emojize('--------------------------------------\n'
                           ':chart_decreasing:  На сегодня торговля окончена'))
-            rewrite(int(base_work_volume), Path(data_path, 'volume.txt'))
-            rewrite(0, Path(data_path, 'day_results.txt'))
-            rewrite(0, Path(data_path, 'results.txt'))
+            table_update('volume', int(base_work_volume))
+            table_update('day_results', '0')
+            table_update('results', '0')
             exit()
         else:
-            results = read(Path(data_path, 'results.txt'))
+            results = table_select('results')
 
             if Decimal(results) < -0.5:
-                rewrite(int(current_work_volume) - 100, Path(data_path, 'volume.txt'))
-                rewrite(0, Path(data_path, 'results.txt'))
+                table_update('volume', int(current_work_volume) - 100)
+                table_update('results', '0')
 
             elif Decimal(results) > 1:
-                rewrite(int(current_work_volume) + 100, Path(data_path, 'volume.txt'))
-                rewrite(0, Path(data_path, 'results.txt'))
+                table_update('volume', int(current_work_volume) + 100)
+                table_update('results', '0')
 
-            current_work_volume = read(Path(data_path, 'volume.txt'))
-            results = read(Path(data_path, 'results.txt'))
+            current_work_volume = table_select('volume')
+            results = table_select('results')
 
             if results == '0':
                 print(emojize('--------------------------------------\n'
@@ -110,5 +98,5 @@ def main():
     work_volume_calculation()
 
 
-if __name__ == '__name__':
+if __name__ == '__main__':
     main()

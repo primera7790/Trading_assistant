@@ -8,6 +8,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
 
 from program.tech_zone.modules_t_a.work_with_data import work_volume_calculation
 from program.tech_zone.modules_t_a.parsing_tmm import get_trade_data
@@ -41,20 +43,23 @@ def get_work_volume(url, email, password, html_name='index.html'):
         print('Перехожу на страницу со сделками...')
         password_input.send_keys(Keys.ENTER)
 
-        time.sleep(random.randrange(5, 6))
-        driver.find_element(By.XPATH, '/html/body/div[1]/div/div[1]/div/div[3]/div[3]/div/button/span/i').click()
+        wait = WebDriverWait(driver, 15)
+        clickable_element = '/html/body/div[1]/div/div[1]/div/div[3]/div[3]/div/button/span/i'
+        wait.until(ec.presence_of_element_located((By.XPATH, clickable_element)))
+        wait.until(ec.element_to_be_clickable((By.XPATH, clickable_element)))
+        driver.find_element(By.XPATH, clickable_element).click()
 
         while True:
             time.sleep(3)
             console_input = input('--------------------------------------\n'
-                                  '> "0" - для вывода базового объема; > ENTER - для расчета актуального; > exit - завершение работы программы.\n'
+                                  '> "0" - для вывода базового объема; > ENTER - для расчета актуального объема; > exit - завершение работы программы.\n'
                                   '--------------------------------------\n'
                                   '>>> Введите значение: ')
             if console_input == '0':
                 work_volume_calculation()
                 continue
 
-            elif console_input.lower() in ('close', 'exit', 'quit', 'end'):
+            elif console_input.lower().strip() in ('close', 'exit', 'end', 'stop', 'off', 'quit'):
                 print('Завершение работы программы...')
                 raise SystemExit('Работа программы завершена.')
 
@@ -62,16 +67,20 @@ def get_work_volume(url, email, password, html_name='index.html'):
                 driver.get(url=url)
                 time.sleep(10)
 
-            with open(Path(Path(__file__).parent, f'data/{html_name}'), 'w', encoding='utf8') as file:
+            with open(Path(Path(__file__).parent, f'tech_zone/html/{html_name}'), 'w', encoding='utf8') as file:
                 file.write(driver.page_source)
 
                 trade_data = get_trade_data()
 
+                if trade_data == 'continue':
+                    continue
+
                 trade_percent = trade_data[0]
                 trade_volume = trade_data[1]
                 trade_commission = trade_data[2]
+                current_trade_id = trade_data[3]
 
-                work_volume_calculation(trade_percent, trade_volume, trade_commission)
+                work_volume_calculation(trade_percent, trade_volume, trade_commission, current_trade_id)
 
     except Exception as ex:
         print(ex)
