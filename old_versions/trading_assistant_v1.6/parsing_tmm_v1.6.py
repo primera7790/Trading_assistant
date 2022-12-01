@@ -3,7 +3,7 @@ from pathlib import Path
 from emoji import emojize
 from bs4 import BeautifulSoup
 
-from program.tech_zone.modules_t_a.t_a_database import table_select
+from program.tech_zone.modules.database_admin import table_select
 
 
 def get_trade_data(html_name='index.html'):

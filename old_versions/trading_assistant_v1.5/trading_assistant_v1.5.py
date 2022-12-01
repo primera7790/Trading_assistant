@@ -9,8 +9,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 
-from program.tech_zone.modules_t_a.work_with_data import work_volume_calculation
-from program.tech_zone.modules_t_a.parsing_tmm import get_trade_data
+from program.old_versions.work_with_data import work_volume_calculation
+from program.old_versions.parsing_tmm import get_trade_data
 
 
 def get_work_volume(url, email, password, html_name='index.html'):

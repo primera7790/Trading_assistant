@@ -3,7 +3,7 @@ from emoji import emojize
 from pathlib import Path
 from decimal import Decimal
 
-data_path = Path(Path(__file__).parent.parent.parent, 'data')
+data_path = Path(Path(__file__).parent.parent.parent, '../data')
 
 
 def read(file_name):
