@@ -3,9 +3,9 @@ from pathlib import Path
 from emoji import emojize
 from bs4 import BeautifulSoup
 
-from program.tech_zone.modules_t_a.work_with_data import read
+from program.old_versions.work_with_data import read
 
-data_path = Path(Path(__file__).parent.parent.parent, 'data')
+data_path = Path(Path(__file__).parent.parent.parent, '../data')
 
 
 def get_trade_data(html_name='index.html'):

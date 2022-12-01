@@ -11,12 +11,12 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
-from program.tech_zone.modules_t_a.work_with_data import work_volume_calculation
-from program.tech_zone.modules_t_a.parsing_tmm import get_trade_data
+from program.old_versions.work_with_data import work_volume_calculation
+from program.old_versions.parsing_tmm import get_trade_data
 
 
 def get_work_volume(url, email, password, html_name='index.html'):
-    chrome_service = Service(r'./tech_zone/driver_chrome_selenium/chromedriver.exe')
+    chrome_service = Service(r'../../tech_zone/driver_chrome_selenium/chromedriver.exe')
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--proxy-server=190.61.88.147:8080')
     chrome_options.add_argument('--disable-blink-features=AutomationControlled')
@@ -64,6 +64,7 @@ def get_work_volume(url, email, password, html_name='index.html'):
                 raise SystemExit('Работа программы завершена.')
 
             else:
+                print('Произвожу сбор информации и вычисления...')
                 driver.get(url=url)
                 time.sleep(10)
 
@@ -93,7 +94,7 @@ def get_work_volume(url, email, password, html_name='index.html'):
 def main():
     url = 'https://tradermake.money/app/account/my-trades'
 
-    load_dotenv(Path(Path(__file__).parent, 'tech_zone', 'env', '.env'))
+    load_dotenv(Path(Path(__file__).parent, '../../tech_zone', 'env', '.env'))
     email = os.environ.get('email_tmm')
     password = os.environ.get('password_tmm')
 

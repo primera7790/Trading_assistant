@@ -1,8 +1,8 @@
 from emoji import emojize
 from decimal import Decimal
 
-from program.tech_zone.modules_t_a.t_a_database import table_select
-from program.tech_zone.modules_t_a.t_a_database import table_update
+from program.tech_zone.modules.database_admin import table_select
+from program.tech_zone.modules.database_admin import table_update
 
 
 def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commission='0', current_trade_id=None):
@@ -17,9 +17,7 @@ def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commissio
             else:
                 break
             table_update('balance', round(Decimal(input_balance), 3))
-            # rewrite(round(Decimal(input_balance), 3), Path(data_path, 'balance.txt'))
             balance = table_select('balance')
-            # balance = read(Path(data_path, 'balance.txt'))
         except ArithmeticError:
             print(emojize('--------------------------------------\n'
                           ':collision::collision::collision: Вводимое значение должно быть числом, повторите попытку.'
