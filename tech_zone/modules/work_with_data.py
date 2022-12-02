@@ -18,8 +18,8 @@ def check_balance(new_balance):
         mb.showerror('Некорректные данные', 'Вводимое значение должно быть целым числом, либо разделенным через точку')
 
 
-def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commission='0', current_trade_id=None):
-
+def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commission='0', current_trade_id=None, iter_on=None):
+    # print('work_volume_calculation')
     balance = table_select('balance')
 
     if float(balance) <= 0:
@@ -89,7 +89,10 @@ def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commissio
             if results == '0':
                 mb.showinfo('Объем изменен', emojize(f':warning:Ваш актуальный объем: {current_work_volume}$'))
             else:
-                mb.showinfo('Текущий рабочий', f'Ваш актуальный объем: {current_work_volume}$')
+                if iter_on is None:
+                    mb.showinfo('Текущий рабочий', f'Ваш актуальный объем: {current_work_volume}$')
+                else:
+                    return
 
 
 def main():

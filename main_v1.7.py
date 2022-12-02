@@ -16,6 +16,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import ElementClickInterceptedException
 
 from program.tech_zone.modules.parsing_tmm import get_trade_data
 from program.tech_zone.modules.database_admin import table_select
@@ -56,7 +57,7 @@ def start_program(email, password):
             wait.until(ec.presence_of_element_located((By.XPATH, clickable_element)))
             wait.until(ec.element_to_be_clickable((By.XPATH, clickable_element)))
             driver.find_element(By.XPATH, clickable_element).click()
-        except TimeoutException:
+        except (TimeoutException, ElementClickInterceptedException):
             time.sleep(2)
             driver.find_element(By.XPATH, '/html/body/div[1]/div/div[1]/div/div[3]/div[3]/div/button/span/i').click()
 
@@ -64,6 +65,7 @@ def start_program(email, password):
 
     except Exception as ex:
         print(ex)
+        mb.showerror('Остановка процессов', 'Программа завершила работу.')
     finally:
         time.sleep(5)
         driver.close()
@@ -83,6 +85,10 @@ def gui_main_window():
     ttk.Label(text='Расчет рабочего объёма сделки', font='Arial 20').place(anchor='center', relx=0.5, rely=0.2)
     ttk.Button(text='БАЗОВЫЙ', width=300, command=lambda: work_volume_calculation()).place(anchor='center', relx=0.5, rely=0.5)
     ttk.Button(text='ТЕКУЩИЙ', width=300, command=lambda: get_new_data()).place(anchor='center', relx=0.5, rely=0.7)
+    ttk.Button(text='Запустить авторежим', width=300, command=lambda: auto_mode()).place(anchor='center', relx=0.5, rely=0.9)
+    # ttk.Button(text='Х', width=3, command=lambda: [auto_mode(stop=True), progressbar.stop()]).place(anchor='center', relx=0.95, rely=0.9)
+    # progressbar = ttk.Progressbar(orient='horizontal', mode='indeterminate', length=206)
+    # progressbar.place(anchor='center', relx=0.71, rely=0.9)
 
     window.mainloop()
 
@@ -98,16 +104,16 @@ def gui_change_balance_window(title=None, text=None):
     ttk.Label(window, text=text, font='Arial 12').place(anchor='center', relx=0.5, rely=0.2)
     entry_balance = ttk.Entry(window)
     entry_balance.place(anchor='center', relx=0.5, rely=0.45)
-    print(entry_balance.get())
     ttk.Button(window, text='Готово', command=lambda: check_balance(entry_balance.get())).place(anchor='center', relx=0.5, rely=0.75)
 
     window.mainloop()
 
 
-def get_new_data():
-    trade_data = last_trade_parsing()
+def get_new_data(iter_on=None):
+    # print('get_new_data')
+    trade_data = last_trade_parsing(iter_on=iter_on)
 
-    if last_trade_parsing is None:
+    if trade_data is None:
         return
     else:
         trade_percent = trade_data[0]
@@ -115,19 +121,36 @@ def get_new_data():
         trade_commission = trade_data[2]
         current_trade_id = trade_data[3]
 
-        work_volume_calculation(trade_percent, trade_volume, trade_commission, current_trade_id)
+        work_volume_calculation(trade_percent, trade_volume, trade_commission, current_trade_id, iter_on)
     return
 
 
-def last_trade_parsing(html_name='index.html'):
-    mb.showinfo('Формирование текущего объема', 'Производится сбор информации и вычисления...', type='ok')
-    driver.get(url=url)
+def last_trade_parsing(html_name='index.html', iter_on=None):
+    # print('last_trade_parsing')
+    if iter_on is None:
+        mb.showinfo('Формирование текущего объема', 'Производится сбор информации и вычисления...', type='ok')
+    while True:
+        driver.get(url=url)
 
-    time.sleep(10)
-    with open(Path(Path(__file__).parent, f'tech_zone/html/{html_name}'), 'w', encoding='utf8') as file:
-        file.write(driver.page_source)
+        time.sleep(10)
+        with open(Path(Path(__file__).parent, f'tech_zone/html/{html_name}'), 'w', encoding='utf8') as file:
+            file.write(driver.page_source)
 
-    return get_trade_data()
+        trade_data = get_trade_data(iter_on=iter_on)
+        if trade_data == 'no data':
+            continue
+        else:
+            return trade_data
+
+
+def auto_mode(stop=None):
+    while True:
+        if stop is None:
+            # print('go')
+            get_new_data(iter_on=True)
+            time.sleep(60)
+        else:
+            return
 
 
 def main():
@@ -142,3 +165,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # gui_main_window()
+    # auto_mode()
