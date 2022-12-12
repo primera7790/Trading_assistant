@@ -1,0 +1,57 @@
+html {
+    text-align-last: center;
+}
+h1 {
+    margin: 50px 0 70px;
+}
+.buttons {
+    display: block;
+    background: #8C959D;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    border-radius: 3px;
+    margin: 20px;
+   }
+
+#btn3 {
+    padding-left: 104px;
+    margin-right:100px;
+    width: auto;
+    float: none;
+}
+#btn4 {
+    position: absolute;
+    padding: 16px 24px;
+    width: 24px;
+    top: 277px;
+    right: 8px
+}
+.clearfix {
+    clear: both;
+}
+.display {
+    height: 200px;
+    width: auto;
+    border: 2px solid #8C959D;
+    margin: 20px;
+}
+#message-text {
+    font-size: 32px;
+    padding-top: 33px;
+}
+.connection {
+    width: 120px;
+    padding: 0.25rem 1.5rem;
+    border-radius: 0px 0px 10px 10px;
+}
+#btn5 {
+    position: absolute;
+    top: 550px;
+    right: 178px;
+}
+#btn6 {
+    position: absolute;
+    top: 550px;
+    right: 8px;
+}
