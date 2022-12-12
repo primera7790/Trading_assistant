@@ -1,4 +1,4 @@
-other/
+program/other/
 .env
 t_a_program.py
 __pycache__/
