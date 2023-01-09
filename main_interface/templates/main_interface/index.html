@@ -1,0 +1,48 @@
+<!Doctype html>
+{% load static %}
+<html lang='ru'>
+    <head>
+        <meta charset='UTF-8'>
+        <title>Trading assistant</title>
+        <link rel='shortcut icon' href="/media/icons/favicon.ico" type='image/x-icon'>
+<!--        <link rel='stylesheet' href='{% static "css/reset.css" %}'>-->
+        <link rel='stylesheet' href='{% static "css/style.css" %}'>
+    </head>
+    <body>
+        <div> 
+            <h1>Расчет рабочего объёма сделки</h1>
+        </div>
+        <div>
+            <a href='{% url "init_base" %}' class='buttons' id='btn1'>Базовый</a>
+        </div>
+        <div>
+            <a href='{% url "init_current" %}' class='buttons' id='btn2'>Текущий</a>
+        </div>
+        <div class='auto-mode'>
+            <div>
+                <a href='{% url "init_auto_mode" %}' class='buttons' id='btn3'>Авторежим</a>
+            </div>
+            <div>
+                <a href='{% url "init_disable_auto_mode" %}' class='buttons' id='btn4'>Х</a>
+            </div>
+        </div>
+        <div class='clearfix'></div>
+        <div class='display'>
+            <p id='message-text'>
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+            </p>
+        </div>
+        <div>
+        <div>
+            <a href='{% url "balance" %}' class='buttons connection' id='btn5'>Текущий баланс</a>
+        </div>
+        <div>
+            <a href='{% url "settings_page" %}' class='buttons connection' id='btn6'>Изменить баланс</a>
+        </div>
+        </div>
+    </body>
+</html>

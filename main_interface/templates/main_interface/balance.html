@@ -1,0 +1,24 @@
+<!Doctype html>
+<html lang='ru'>
+    <head>
+        <meta charset='UTF-8'>
+        <title>Текущий баланс</title>
+        <link rel='shortcut icon' href="/media/icons/favicon.ico" type='image/x-icon'>
+<!--        <link rel='stylesheet' href='{% static "css/reset.css" %}'>-->
+        <style>
+            html {
+                text-align-last: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='navigation'>
+            <p><a style='position: absolute; top: 10px; left: 20px; color: black; ' href='{% url "index" %}' id='accept_button'>Назад</a> </p>
+        </div>
+        <div class='balance' style='font-size: 32px; width: 500px; height: 50px; position: absolute; top: 45%; left: 50%; margin: -25px 0 0 -250px;'>
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>     
+    </body>
+</html>

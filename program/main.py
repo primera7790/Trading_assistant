@@ -24,7 +24,7 @@ def last_trade_parsing(email, password, html_name='index.html'):
     chrome_options = webdriver.ChromeOptions()
     # chrome_options.add_argument('--proxy-server=190.61.88.147:8080')
     chrome_options.add_argument('--disable-blink-features=AutomationControlled')
-    # chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--headless')
     driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
     url = 'https://tradermake.money/app/account/my-trades'
@@ -95,22 +95,22 @@ def last_trade_parsing(email, password, html_name='index.html'):
         driver.quit()
 
 
-def auto_mode():
-    count = 0
-    while True:
-        work_volume_message = main()
-        if work_volume_message and ('Ваш актуальный объем' in work_volume_message):
-            return work_volume_message
-        else:
-            count += 1
-            if count == 100:
-                return
-            time.sleep(60)
-            continue
+# def auto_mode():
+#     count = 0
+#     while True:
+#         work_volume_message = main()
+#         if work_volume_message and ('Ваш актуальный объем' in work_volume_message):
+#             return work_volume_message
+#         else:
+#             count += 1
+#             if count == 100:
+#                 return
+#             time.sleep(60)
+#             continue
 
 
 def main():
-    load_dotenv(Path(Path(__file__).parent, 'tech_zone', 'env', '.env'))
+    load_dotenv(Path(Path(__file__).parent, 'tech_zone/env/.env'))
     email = os.environ.get('email_tmm')
     password = os.environ.get('password_tmm')
 

@@ -2,4 +2,4 @@ program/other/
 .env
 t_a_program.py
 __pycache__/
-*.html
+program/tech_zone/html/index.html

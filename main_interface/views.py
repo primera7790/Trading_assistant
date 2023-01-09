@@ -5,9 +5,15 @@ from django.contrib import messages
 from django.shortcuts import render, HttpResponseRedirect
 
 # from main_interface.models import UserData
+from .tasks import auto_mode_task, stop_auto_mode_task
+# from program.tech_zone.modules.work_with_data import work_volume_calculation
 from main_interface.forms import BalanceForm
 from program.tech_zone.modules.database_admin import table_update, table_select
 from program.tech_zone.modules.work_with_data import check_new_balance, work_volume_calculation
+
+
+# count = 0
+process_id = 0
 
 
 def index(request):
@@ -27,13 +33,19 @@ def init_current(request):
 
 
 def init_auto_mode(request):
-    work_volume_message = main.auto_mode()
-    messages.info(request, work_volume_message)
+    global process_id
+    start_process = auto_mode_task.delay()
+    process_id = start_process.id
+    # work_volume_calculation()
+    process_start_message = 'Авторежим активирован. Telegram bot активен.'
+    messages.info(request, process_start_message)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def init_disable_auto_mode(request):
-    main.auto_mode()
+    stop_auto_mode_task(process_id)
+    process_stop_message = 'Авторежим деактивирован. Telegram bot более не активен.'
+    messages.info(request, process_stop_message)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

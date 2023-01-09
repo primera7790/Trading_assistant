@@ -1,0 +1,30 @@
+<!Doctype html>
+<html lang='ru'>
+    <head>
+        <meta charset='UTF-8'>
+        <title>Изменение значения баланса</title>
+        <link rel='shortcut icon' href="/media/icons/favicon.ico" type='image/x-icon'>
+<!--        <link rel='stylesheet' href='{% static "css/reset.css" %}'>-->
+        <style>
+            html {
+                text-align-last: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='navigation'>
+            <p><a style='position: absolute; top: 10px; left: 20px; color: black; ' href='{% url "index" %}' id='accept_button'>Назад</a> </p>
+        </div>
+        <div> <br>
+            <h2>Изменение суммы баланса</h2>
+            <form action='{% url "settings_page" %}' method='post'>
+                {% csrf_token %}
+                {{ form.value }}
+<!--                <input type='text' name='balance' placeholder='Введите значение'>-->
+                <br>
+                <br>
+                <input type='submit' value='Применить'>
+            </form>
+        </div>
+    </body>
+</html>

@@ -58,9 +58,9 @@ def testing(select, cursor=None):
 def main():
     # table_create()
     # table_insert()
-    # table_update('previous_trade_id', 30)
+    table_update('previous_trade_id', 30)
     # table_delete('rowid = 2')
-    print(table_select('balance'))
+    # print(table_select('balance'))
     # print(testing('*'))
 
 
