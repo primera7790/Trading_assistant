@@ -1,5 +1,5 @@
 # Trading_assistant
-Description of Functionality:
+Description of functionality:
 1. Launch the desired operating mode through the site;
 2. Parsing data from the Internet resource with the current statistics;
 3. In case of detecting a transaction (trade), new data is entered into the database;
