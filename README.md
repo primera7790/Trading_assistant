@@ -8,7 +8,7 @@ Description of functionality:
 
 Tools used:
 - site: django, html, css;
-- parsing: bs4, lxml, selenium;
+- parsing: requests, bs4, lxml, selenium;
 - database: sqlite3;
 - telegram bot: aiogram;
 - auto mode: asyncio, apscheduler, celery, rabbitmq, docker;
