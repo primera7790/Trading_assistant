@@ -6,3 +6,9 @@ Description of functionality:
 4. An algorithm for calculating work volume is launched;
 5. The final value is displayed on the site or sent by a Telegram bot (depending on the selected mode).
 
+Tools used:
+- site: django, html, css;
+- parsing: bs4, lxml, selenium;
+- telegram bot: aiogram;
+- auto mode: asyncio, apscheduler, celery, rabbitmq, docker;
+- gui(old version): tkinter.
