@@ -6,11 +6,9 @@ from program.tech_zone.modules.database_admin import table_select
 
 
 def get_trade_data(html_name='index.html', iter_on=None):
-    print('get_trade_data')
     with open(Path(Path(__file__).parent.parent, f'html/{html_name}'), encoding='utf8') as file:
         src = file.read()
     soup = BeautifulSoup(src, 'lxml')
-    print('get_trade_data2')
     try:
         previous_trade_id = table_select('previous_trade_id')
 
@@ -26,7 +24,6 @@ def get_trade_data(html_name='index.html', iter_on=None):
             find('tr').\
             find_next('tr').\
             find_all('td')
-        print('5')
         trade_volume = trade_info[23]
         trade_commission = trade_info[24]
     except (AttributeError, IndexError):
@@ -38,24 +35,19 @@ def get_trade_data(html_name='index.html', iter_on=None):
         trade_commission = trade_commission.text.replace('$', '').strip().replace(',', '.')
 
         if current_trade_id == previous_trade_id:
-            print('21')
             if iter_on is None:
-                print('22')
                 return 'nothing_trades'
             return
 
         elif trade_percent.replace('.', '').isdigit() and \
                 trade_volume.replace('.', '').isdigit() and \
                 trade_commission.replace('.', '').isdigit():
-            print('23')
             return [trade_percent, trade_volume, trade_commission, current_trade_id]
 
     if iter_on is None:
-        print('24')
         time.sleep(10)
         return 'no data'
     else:
-        print('25')
         return
 
 
