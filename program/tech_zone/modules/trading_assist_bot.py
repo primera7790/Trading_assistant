@@ -91,14 +91,11 @@ def init_bot():
                 driver.find_element(By.XPATH, '/html/body/div[1]/div/div[1]/div/div[3]/div[3]/div/button/span/i').click()
 
             driver.get(url=url)
-            print('2')
             time.sleep(10)
             with open(Path(Path(__file__).parent, f'tech_zone/html/index.html'), 'w', encoding='utf8') as file:
                 file.write(driver.page_source)
-            print('3')
 
             trade_data = get_trade_data()
-            print('6')
             if trade_data == 'no data':
                 print('if')
                 return
@@ -116,7 +113,6 @@ def init_bot():
                     current_trade_id = trade_data[3]
 
                     current_work_volume = work_volume_calculation(trade_percent, trade_volume, trade_commission, current_trade_id)
-                    print('9')
                     dynamic_volume = current_work_volume
                     return
 
@@ -144,7 +140,6 @@ def init_bot():
             elif static_volume != dynamic_volume:
                 await bot.send_message(402134252, f'Рабочий объем: {dynamic_volume}$')
                 static_volume = dynamic_volume
-                print(f'in {dynamic_volume}')
 
             await asyncio.sleep(10)
 
