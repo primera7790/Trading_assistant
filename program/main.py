@@ -20,23 +20,26 @@ from program.tech_zone.modules.work_with_data import work_volume_calculation
 
 
 def last_trade_parsing(email, password, html_name='index.html'):
-    chrome_service = Service(r'program/tech_zone/driver_chrome_selenium/chromedriver.exe')
+    # chrome_service = Service(r'program/tech_zone/driver_chrome_selenium/chromedriver.exe')
     chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument('--proxy-server=190.61.88.147:8080')
+    # chrome_options.add_argument('--proxy-server=190.61.88.147:8080') ------------
     chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+    chrome_options.add_argument('--remote-debugging-port=9222')
     chrome_options.add_argument('--headless')
-    driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
-
+    driver = webdriver.Chrome(executable_path=r'program/tech_zone/driver_chrome_selenium/chromedriver',
+                              options=chrome_options)
+    # driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+    
     url = 'https://tradermake.money/app/account/my-trades'
     try:
         driver.get(url=url)
         time.sleep(2)
-        email_input = driver.find_element(By.ID, 'input-27')
+        email_input = driver.find_element(By.ID, 'input-23')
         email_input.clear()
         email_input.send_keys(email)
 
         time.sleep(random.randrange(1, 2))
-        password_input = driver.find_element(By.ID, 'input-31')
+        password_input = driver.find_element(By.ID, 'input-27')
         password_input.clear()
         password_input.send_keys(password)
 
@@ -58,32 +61,25 @@ def last_trade_parsing(email, password, html_name='index.html'):
 
         while True:
             driver.get(url=url)
-            print('2')
             time.sleep(10)
             with open(Path(Path(__file__).parent, f'tech_zone/html/{html_name}'), 'w', encoding='utf8') as file:
                 file.write(driver.page_source)
-            print('3')
             trade_data = get_trade_data()
-            print('6')
             if trade_data == 'no data':
-                print('if')
                 continue
             elif trade_data == 'nothing_trades':
                 work_volume_message = emojize(':collision: Новых сделок не обнаружено.')
                 return work_volume_message
             else:
                 if trade_data is None:
-                    print('if2')
                     return
                 else:
-                    print('else')
                     trade_percent = trade_data[0]
                     trade_volume = trade_data[1]
                     trade_commission = trade_data[2]
                     current_trade_id = trade_data[3]
 
                     work_volume_message = work_volume_calculation(trade_percent, trade_volume, trade_commission, current_trade_id)
-                    print('9')
                 return work_volume_message
 
     except Exception as ex:
