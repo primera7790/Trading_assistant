@@ -7,19 +7,16 @@ from program.tech_zone.modules.database_admin import table_select, table_update
 def check_new_balance(new_balance):
     try:
         if new_balance == '' or new_balance == '0' or float(new_balance) <= 0:
-            print('if')
             return 'Некорректные данные, измените значение суммы на Вашем балансе.'
         else:
             return 'Баланс успешно обновлен!'
 
     except (ArithmeticError, ValueError):
-        print('expect')
         return 'Некорректные данные, вводимое значение должно быть целым числом, либо разделенным точкой.'
 
 
 def work_volume_calculation(trade_percent='0', trade_volume='0', trade_commission='0', current_trade_id=None):
     balance = table_select('balance')
-    print('8')
     if float(balance) <= 0:
         return 'Сумма Вашего баланса равна нулю. Задайте иное значение.'
 
