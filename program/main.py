@@ -10,7 +10,7 @@ from tkinter import messagebox as mb
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
@@ -20,15 +20,15 @@ from program.tech_zone.modules.work_with_data import work_volume_calculation
 
 
 def last_trade_parsing(email, password, html_name='index.html'):
-    # chrome_service = Service(r'program/tech_zone/driver_chrome_selenium/chromedriver.exe')
+    chrome_service = Service(r'./tech_zone/driver_chrome_selenium/chromedriver.exe')
     chrome_options = webdriver.ChromeOptions()
     # chrome_options.add_argument('--proxy-server=190.61.88.147:8080') ------------
     chrome_options.add_argument('--disable-blink-features=AutomationControlled')
     chrome_options.add_argument('--remote-debugging-port=9222')
     chrome_options.add_argument('--headless')
-    driver = webdriver.Chrome(executable_path=r'program/tech_zone/driver_chrome_selenium/chromedriver',
-                              options=chrome_options)
-    # driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+    # driver = webdriver.Chrome(executable_path=r'program/tech_zone/driver_chrome_selenium/chromedriver',
+    #                           options=chrome_options)
+    driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
     
     url = 'https://tradermake.money/app/account/my-trades'
     try:
