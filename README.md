@@ -17,5 +17,5 @@
 ### About program
  The task of the program - reduction of the psychological burden, by mathematically reasonable regulation of volumes and exclusion of unreasonable risk, if necessary - restriction of trade. Also, an important aspect - isolation of the trader from the information on the intermediate financial result that allows to concentrate on the deal, not on the balance state.
 
-## !Important notice
- Support of the project is terminated due to the termination of Binance exchange in the Russian Federation. The project is for review only.
+## !! IMPORTANT NOTICE
+### Support of the project is terminated due to the termination of Binance exchange in the Russian Federation. The project is for review only.
