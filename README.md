@@ -6,6 +6,8 @@
 4. An algorithm for calculating work volume is launched;
 5. The final value is displayed on the site or sent by a Telegram bot (depending on the selected mode).
 
+File to run: program/main.py
+
 ### Tools used:
 - site: django, html, css;
 - parsing: requests, bs4, lxml, selenium;
