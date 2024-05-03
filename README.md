@@ -1,10 +1,11 @@
 # Trading_assistant
 ### Description of functionality:
-1. Launch the desired operating mode through the site;
-2. Parsing data from the Internet resource with the current statistics;
-3. In case of detecting a transaction (trade), new data is entered into the database;
-4. An algorithm for calculating work volume is launched;
-5. The final value is displayed on the site or sent by a Telegram bot (depending on the selected mode).
+1. Launching the site;
+2. Selecting the desired mode of operation (stay on the site, or interaction via Telegram);
+3. Parsing of data from an Internet resource displaying actual trade statistics;
+4. In case of detecting a transaction (trade), new data is entered into the database;
+5. Based on the information about the transaction, the algorithm calculates the relevant volume of the next one, or informs about the need to stop trading;
+6. The result is displayed on the site or sent to the Telegram bot (depending on the selected mode).
 
 File to run: program/main.py
 
