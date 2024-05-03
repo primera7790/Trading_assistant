@@ -9,12 +9,12 @@
 File to run: program/main.py
 
 ### Tools used:
-- site: django, html, css;
-- parsing: requests, bs4, lxml, selenium;
-- database: sqlite3;
-- telegram bot: aiogram;
-- auto mode: asyncio, apscheduler, celery, rabbitmq, docker;
-- gui(old version): tkinter.
+- site: `django` , `html` , `css` ;
+- parsing: `requests` , `bs4` , `lxml` , `selenium` ;
+- database: `sqlite3` ;
+- telegram bot: `aiogram` ;
+- auto mode: `asyncio` , `apscheduler` , `celery` , `rabbitmq` , `docker` ;
+- gui(old version): `tkinter` .
 
 ### About program
  The task of the program - reduction of the psychological burden, by mathematically reasonable regulation of volumes and exclusion of unreasonable risk, if necessary - restriction of trade. Also, an important aspect - isolation of the trader from the information on the intermediate financial result that allows to concentrate on the deal, not on the balance state.
