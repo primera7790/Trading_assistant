@@ -9,7 +9,8 @@
 
 File to run: program/main.py
 
-### Tools used:
+### Tools:
+- language: &nbsp; `python` ;
 - site: &nbsp; `django` , `html` , `css` ;
 - parsing: &nbsp; `requests` , `bs4` , `lxml` , `selenium` ;
 - database: &nbsp; `sqlite3` ;
