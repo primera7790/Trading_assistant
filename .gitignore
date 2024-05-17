@@ -1,5 +1,4 @@
 program/other/
-.env
 t_a_program.py
 __pycache__/
 program/tech_zone/html/index.html

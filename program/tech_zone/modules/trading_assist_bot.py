@@ -25,14 +25,12 @@ dynamic_volume = 1
 
 
 def init_bot():
-    print('init bot')
     load_dotenv(Path(Path(__file__).parent.parent, 'env/.env'))
     bot = Bot(token=os.environ.get('TOKEN_TRADING_ASSIST_BOT'))
     dp = Dispatcher(bot)
 
     @dp.message_handler()
     async def start_bot(message: types.Message):
-        print('async start bot')
         if message.text == '/start':
             await message.answer(text='Программа запущена')
             loop = asyncio.get_event_loop()
@@ -52,7 +50,6 @@ def init_bot():
 
     def scheduler_main_process():
         global dynamic_volume
-        print('selenium')
         chrome_service = Service(str(Path(Path(__file__).parent.parent, r'driver_chrome_selenium/chromedriver.exe')))
         chrome_options = webdriver.ChromeOptions()
         # chrome_options.add_argument('--proxy-server=190.61.88.147:8080') ------------
@@ -63,7 +60,7 @@ def init_bot():
         #                           options=chrome_options)
         driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
-        url = 'https://tradermake.money/app/account/my-trades'
+        url = 'https://tradermake.money/app2/account/my-trades'
 
         email = os.environ.get('email_tmm')
         password = os.environ.get('password_tmm')
@@ -71,26 +68,26 @@ def init_bot():
         try:
             driver.get(url=url)
             time.sleep(2)
-            email_input = driver.find_element(By.ID, 'input-23')
+            email_input = driver.find_element(By.ID, 'input-19')
             email_input.clear()
             email_input.send_keys(email)
 
             time.sleep(random.randrange(1, 2))
-            password_input = driver.find_element(By.ID, 'input-27')
+            password_input = driver.find_element(By.ID, 'input-23')
             password_input.clear()
             password_input.send_keys(password)
 
             time.sleep(random.randrange(1, 2))
             password_input.send_keys(Keys.ENTER)
-            try:
-                wait = WebDriverWait(driver, 20)
-                clickable_element = '/html/body/div[1]/div/div[1]/div/div[3]/div[3]/div/button/span/i'
-                wait.until(ec.presence_of_element_located((By.XPATH, clickable_element)))
-                wait.until(ec.element_to_be_clickable((By.XPATH, clickable_element)))
-                driver.find_element(By.XPATH, clickable_element).click()
-            except (TimeoutException, ElementClickInterceptedException):
-                time.sleep(2)
-                driver.find_element(By.XPATH, '/html/body/div[1]/div/div[1]/div/div[3]/div[3]/div/button/span/i').click()
+            # try:
+            #     wait = WebDriverWait(driver, 20)
+            #     clickable_element = '/html/body/div[1]/div/div[1]/div/div[3]/div[3]/div/button/span/i'
+            #     wait.until(ec.presence_of_element_located((By.XPATH, clickable_element)))
+            #     wait.until(ec.element_to_be_clickable((By.XPATH, clickable_element)))
+            #     driver.find_element(By.XPATH, clickable_element).click()
+            # except (TimeoutException, ElementClickInterceptedException):
+            #     time.sleep(2)
+            #     driver.find_element(By.XPATH, '/html/body/div[1]/div/div[1]/div/div[3]/div[3]/div/button/span/i').click()
 
             driver.get(url=url)
             time.sleep(10)
