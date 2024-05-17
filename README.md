@@ -25,3 +25,11 @@ File to run: program/main.py
 
 ## !! IMPORTANT NOTICE
 ### Support of the project is terminated due to the termination of Binance exchange in the Russian Federation. The project is for review only.
+<br>
+<br>
+
+## Additionally
+
+<img width=900px src='https://github.com/primera7790/Trading_assistant/blob/master/media/images/base_volume.PNG' alt='base_volume'>
+<img width=900px src='https://github.com/primera7790/Trading_assistant/blob/master/media/images/current_balance.PNG' alt='current_balance'>
+<img width=900px src='https://github.com/primera7790/Trading_assistant/blob/master/media/images/balance_change.PNG' alt='balance_change'>
