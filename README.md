@@ -7,7 +7,9 @@
 5. Based on the information about the transaction, the algorithm calculates the relevant volume of the next one, or informs about the need to stop trading;
 6. The result is displayed on the site or sent to the Telegram bot (depending on the selected mode).
 
-File to run: program/main.py
+.env file: &nbsp; [./program/tech_zone/env/.env](https://github.com/primera7790/Trading_assistant/blob/master/program/tech_zone/env/.env)<br>
+statistic resource: &nbsp; [tradermake.money](https://tradermake.money/)<br>
+Telegram bot: &nbsp; [Trading_assist_bot](https://github.com/primera7790/Trading_assist_bot)
 
 ### Tools:
 - language: &nbsp; `python` ;
