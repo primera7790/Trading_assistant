@@ -26,7 +26,13 @@ def table_create(cursor=None):
 
 @database_init
 def table_insert(balance='0', volume='0', result='0', day_result='0', previous_trade_id='0', cursor=None):
-    cursor.execute(f'INSERT INTO main_interface_userdata VALUES ("id" = "1", "balance" = {balance}, "volume" = {volume}, "result" = {result}, "day_result" = {day_result}, "previous_trade_id" = {previous_trade_id})')
+    cursor.execute(
+        f'INSERT INTO main_interface_userdata VALUES ("id" = "1", "balance" = {balance}, \
+        "volume" = {volume}, \
+        "result" = {result}, \
+        "day_result" = {day_result}, \
+        "previous_trade_id" = {previous_trade_id})'
+    )
     return print('Values added')
 
 

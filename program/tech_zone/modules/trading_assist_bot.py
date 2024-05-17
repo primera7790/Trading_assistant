@@ -12,7 +12,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
@@ -25,12 +25,14 @@ dynamic_volume = 1
 
 
 def init_bot():
+    print('init bot')
     load_dotenv(Path(Path(__file__).parent.parent, 'env/.env'))
     bot = Bot(token=os.environ.get('TOKEN_TRADING_ASSIST_BOT'))
     dp = Dispatcher(bot)
 
     @dp.message_handler()
     async def start_bot(message: types.Message):
+        print('async start bot')
         if message.text == '/start':
             await message.answer(text='Программа запущена')
             loop = asyncio.get_event_loop()
@@ -50,16 +52,16 @@ def init_bot():
 
     def scheduler_main_process():
         global dynamic_volume
-
-        # chrome_service = Service(r'program/tech_zone/driver_chrome_selenium/chromedriver.exe')
+        print('selenium')
+        chrome_service = Service(str(Path(Path(__file__).parent.parent, r'driver_chrome_selenium/chromedriver.exe')))
         chrome_options = webdriver.ChromeOptions()
         # chrome_options.add_argument('--proxy-server=190.61.88.147:8080') ------------
         chrome_options.add_argument('--disable-blink-features=AutomationControlled')
         chrome_options.add_argument('--remote-debugging-port=9222')
         chrome_options.add_argument('--headless')
-        driver = webdriver.Chrome(executable_path=r'program/tech_zone/driver_chrome_selenium/chromedriver',
-                                  options=chrome_options)
-        # driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+        # driver = webdriver.Chrome(executable_path=r'../driver_chrome_selenium/chromedriver',
+        #                           options=chrome_options)
+        driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
         url = 'https://tradermake.money/app/account/my-trades'
 
@@ -97,7 +99,6 @@ def init_bot():
 
             trade_data = get_trade_data()
             if trade_data == 'no data':
-                print('if')
                 return
             else:
                 if trade_data is None:
@@ -106,7 +107,6 @@ def init_bot():
                 elif trade_data == 'nothing trades':
                     return
                 else:
-                    print('else')
                     trade_percent = trade_data[0]
                     trade_volume = trade_data[1]
                     trade_commission = trade_data[2]
@@ -146,3 +146,11 @@ def init_bot():
     scheduler = BackgroundScheduler()
     scheduler.add_job(scheduler_main_process, 'interval', seconds=20)
     executor.start_polling(dp, skip_updates=True)
+
+
+def main():
+    init_bot()
+
+
+if __name__ == '__main__':
+    main()

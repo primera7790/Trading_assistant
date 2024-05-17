@@ -5,7 +5,6 @@
         <meta charset='UTF-8'>
         <title>Trading assistant</title>
         <link rel='shortcut icon' href="/media/icons/favicon.ico" type='image/x-icon'>
-<!--        <link rel='stylesheet' href='{% static "css/reset.css" %}'>-->
         <link rel='stylesheet' href='{% static "css/style.css" %}'>
     </head>
     <body>
@@ -13,14 +12,14 @@
             <h1>Расчет рабочего объёма сделки</h1>
         </div>
         <div>
-            <a href='{% url "init_base" %}' class='buttons' id='btn1'>Базовый</a>
+            <a href='{% url "init_base" %}' class='buttons' id='btn1'>Сбросить до базового</a>
         </div>
         <div>
-            <a href='{% url "init_current" %}' class='buttons' id='btn2'>Текущий</a>
+            <a href='{% url "init_current" %}' class='buttons' id='btn2'>Рассчитать актуальный</a>
         </div>
         <div class='auto-mode'>
             <div>
-                <a href='{% url "init_auto_mode" %}' class='buttons' id='btn3'>Авторежим</a>
+                <a href='{% url "init_auto_mode" %}' class='buttons' id='btn3'>Перейти в авторежим</a>
             </div>
             <div>
                 <a href='{% url "init_disable_auto_mode" %}' class='buttons' id='btn4'>Х</a>

@@ -28,7 +28,6 @@ def get_trade_data(html_name='index.html', iter_on=None):
         trade_commission = trade_info[24]
     except (AttributeError, IndexError):
         return 'no data'
-    print('get_trade_data3')
     if trade_percent is not None and trade_volume is not None and trade_commission is not None:
         trade_percent = trade_percent.text.replace('%', '').strip().replace(',', '.')
         trade_volume = trade_volume.text.replace('$', '').strip().replace(',', '.')
